@@ -43,65 +43,35 @@
   </script> -->
 
   <script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2.9/sdk.js"></script>
   <script>
-    function createUniversalLink() {
-    }
-
-    async function shareMsg() {
-    }
-
-    function logOut() {
-    }
-
-    function closed() {
-    }
-
-    async function scanCode() {
-    }
-
-    function openWindow() {
-    }
-
-    async function getFriendship() {
-    }
-
-    async function sendMsg() {
-    }
-
-    function getContext() {
-    }
-
-    async function getUserProfile() {
-    var Profile = await liff.getProfile()
-    document.getElementById("pictureUrl").src = Profile.pictureUrl
-    document.getElementById("userId").append(Profile.userId)
-    document.getElementById("displayName").append(Profile.displayName)
-    document.getElementById("statusMessage").append(Profile.statusMessage)
-    }
-    function getEnvironment() {
-      document.getElementById("os").append(liff.getOS())
-      document.getElementById("language").append(liff.getLanguage())
-      document.getElementById("version").append(liff.getVersion())
-      document.getElementById("accessToken").append(liff.getAccessToken())
-      document.getElementById("isInClient").append(liff.isInClient())
-      if(liff.isInClient()){
-         document.getElementById("btnLogOut").style.display = "none"
-      }else{
-        document.getElementById("btnMsg").style.display = "none"
-        document.getElementById("btnScanCode").style.display = "none"
-        document.getElementById("btnClose").style.display = "none"
+    /// Config Your LIFF ID Here
+    const liffId = "1655908759-dy90mbpz";
+    /// Config Your LIFF ID Here
+    liff.ready
+      .then(() => {
+        if (liff.isLoggedIn()) {
+          return liff.getProfile();
+        } else {
+          liff.login({
+            redirectUri: "https://script.google.com/macros/s/AKfycbzVZoxA9zcegjDI1b4MZ-tqDaqJwV_j88qQ97V-PYG5HKXACcSSGK8H4wHg51k4vBNLLw/exec",
+          });
+        }
+      })
+      .then((profile) => {
+        window.location.replace(
+          'https://docs.google.com/forms/d/e/1FAIpQLScv_CPadG2YbYJJnZdjAuAp43uBZMg0tYnNnvLxie6d9ECagw/viewform?usp=pp_url&entry.425496519=${profile.userId}&entry.2017691434=${profile.displayName}&entry.1782615134=${profile.pictureUrl}&entry.893676728=${profile.statusMessage}'
+        );
+      });
+    liff.init(
+      {
+        liffId: liffId,
+      },
+      () => {},
+      (err) => {
+        window.alert(err);
       }
-    }
-
-    async function main() {
-      await liff.init({ liffId: "1655908759-dy90mbpz" })
-      getEnvironment()
-      getUserProfile()
-      // getContext()
-      // getFriendship()
-      // createUniversalLink()
-    }
-    main()
+    );
   </script>
 </body>
 </html>
