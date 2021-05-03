@@ -33,7 +33,9 @@
         if (liff.isLoggedIn()) {
           return liff.getProfile();
         } else {
-          liff.login();
+          liff.login({
+            redirectUri: "https://forms.gle/xsPwd1iDLvhrZqRE9",
+          });
         }
       })
       .then((profile) => {
